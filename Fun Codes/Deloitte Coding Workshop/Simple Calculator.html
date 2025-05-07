@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Simple Calculator</h2>
+<input type="number" id="num1" placeholder="Enter first number" required>
+<input type="number" id="num2" placeholder="Enter second number" required>
+<select id="operator">
+    <option value="add">Add (+)</option>
+    <option value="subtract">Subtract (-)</option>
+    <option value="multiply">Multiply (*)</option>
+    <option value="divide">Divide (/)</option>
+</select>
+<button id="calcBtn" onclick="calculate()" disabled>Calculate</button>
+
+<!-- Break to move result to the next line -->
+<br><br>
+
+<!-- Result on a new line -->
+<label for="result">Result:</label>
+<input id="result" placeholder="Result" required readonly>
+
+<script>
+    // Enable button only if valid inputs are present
+    const num1Input = document.getElementById("num1");
+    const num2Input = document.getElementById("num2");
+    const calcBtn = document.getElementById("calcBtn");
+
+    function validateInputs() {
+      const num1 = parseFloat(num1Input.value);
+      const num2 = parseFloat(num2Input.value);
+
+      const valid = !isNaN(num1) && !isNaN(num2);
+      calcBtn.disabled = !valid;
+    }
+
+    num1Input.addEventListener("input", validateInputs);
+    num2Input.addEventListener("input", validateInputs);
+
+    function calculate() {
+      const num1 = parseFloat(document.getElementById("num1").value);
+      const num2 = parseFloat(document.getElementById("num2").value);
+      const operator = document.getElementById("operator").value;
+      const resultField = document.getElementById("result");
+
+      let result;
+
+      if (isNaN(num1) || isNaN(num2)) {
+        alert("Please enter valid numbers.");
+        return;
+      }
+
+      switch (operator) {
+        case "add":
+          result = num1 + num2;
+          break;
+        case "subtract":
+          result = num1 - num2;
+          break;
+        case "multiply":
+          result = num1 * num2;
+          break;
+        case "divide":
+          if (num2 === 0) {
+            alert("Cannot divide by zero.");
+            return;
+          }
+          result = num1 / num2;
+          break;
+        default:
+          alert("Invalid operation.");
+          return;
+      }
+
+      resultField.value = result;
+    }
+</script>
+</body>
+</html>
